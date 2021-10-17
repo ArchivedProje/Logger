@@ -14,7 +14,6 @@ private:
 
     Logger &operator=(Logger &) = delete;
 
-    static std::ofstream file_;
 public:
     static void log(const std::string &msg, const std::string &fileName, size_t lineNumber);
 };

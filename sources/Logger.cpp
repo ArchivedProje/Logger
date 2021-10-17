@@ -6,7 +6,7 @@
 #include <iomanip>
 
 void Logger::log(const std::string &msg, const std::string &fileName, size_t lineNumber) {
-    file_ = std::ofstream("log/mainLog.log", std::ios::app);
+    auto file_ = std::ofstream("log/mainLog.log", std::ios::app);
     if (!file_.is_open()) {
         throw std::runtime_error{"Can't open log file"};
     }
