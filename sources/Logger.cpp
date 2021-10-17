@@ -5,9 +5,11 @@
 #include <chrono>
 #include <iomanip>
 
-std::ofstream Logger::file_ = std::ofstream("log/mainLog.log", std::ios::app);
-
 void Logger::log(const std::string &msg, const std::string &fileName, size_t lineNumber) {
+    file_ = std::ofstream("log/mainLog.log", std::ios::app);
+    if (!file_.is_open()) {
+        throw std::runtime_error{"Can't open log file"};
+    }
     const char *time_param = "%T";
 #ifdef BOOST_OS_WINDOWS
     time_param = "%X";
@@ -17,4 +19,5 @@ void Logger::log(const std::string &msg, const std::string &fileName, size_t lin
     file_ << "[" << std::put_time(std::localtime(&time), "%d.%m.%y") << ' '
           << std::put_time(std::localtime(&time), time_param) << "][LINE: " << lineNumber << "][FILE: " << fileName
           << "][LOG]: " << msg << std::endl;
+    file_.close();
 }
